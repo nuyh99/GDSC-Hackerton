@@ -32,8 +32,8 @@ public class ProblemService {
         problemRepository.save(problem);
 
         List<String> codes = codeToList(original);
-        for (long i = 0; i < codes.size(); i++)
-            codeRepository.save(new Code(i + 1, codes.get((int) i), problem));
+        for (int i = 0; i < codes.size(); i++)
+            codeRepository.save(new Code(i + 1, codes.get(i), problem));
     }
 
     public List<ProblemListDto> getProblemList() {
@@ -47,9 +47,9 @@ public class ProblemService {
     public ProblemDto getProblem(Long problemId) {
         Problem problem = problemRepository.findById(problemId).get();
 
-        List<String> codes = new ArrayList<>(codeRepository.findByProblemIdOrderByIndexAsc(problemId)
+        List<String> codes = new ArrayList<>(codeRepository.findByProblemIdOrderByOriginalIndexAsc(problemId)
                 .stream()
-                .map(Code::getCode)
+                .map(Code::getCodeString)
                 .toList());
         Collections.shuffle(codes);
 
@@ -57,9 +57,9 @@ public class ProblemService {
     }
 
     public boolean isCorrect(Long problemId, UserAnswerDto userAnswer) {
-        List<String> answer = codeRepository.findByProblemIdOrderByIndexAsc(problemId)
+        List<String> answer = codeRepository.findByProblemIdOrderByOriginalIndexAsc(problemId)
                 .stream()
-                .map(Code::getCode)
+                .map(Code::getCodeString)
                 .toList();
 
         List<String> user = userAnswer.getCodes();

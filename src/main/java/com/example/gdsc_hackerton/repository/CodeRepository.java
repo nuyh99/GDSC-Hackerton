@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface CodeRepository extends JpaRepository<Code, Long> {
-    List<Code> findByProblemIdOrderByIndexAsc(Long problemID);
+    List<Code> findByProblemIdOrderByOriginalIndexAsc(Long problemID);
 }

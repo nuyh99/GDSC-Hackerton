@@ -31,7 +31,7 @@ class ProblemServiceTest {
 
         //when
         Problem problem = problemRepository.findById(1L).get();
-        List<Code> codes = codeRepository.findByProblemIdOrderByIndexAsc(problem.getId());
+        List<Code> codes = codeRepository.findByProblemIdOrderByOriginalIndexAsc(problem.getId());
         ProblemDto problem1 = problemService.getProblem(problem.getId());
 
         //then
@@ -40,7 +40,7 @@ class ProblemServiceTest {
 
         problemService.getProblemList().forEach(System.out::println);
 
-        List<String> answer = codes.stream().map(Code::getCode).toList();
+        List<String> answer = codes.stream().map(Code::getCodeString).toList();
         UserAnswerDto dto = new UserAnswerDto();
         dto.setCodes(answer);
         Assertions.assertThat(problemService.isCorrect(problem.getId(), dto)).isTrue();

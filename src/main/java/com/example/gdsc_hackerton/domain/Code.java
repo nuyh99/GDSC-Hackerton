@@ -19,17 +19,17 @@ public class Code {
     @Column(name = "code_id")
     private Long id;
 
-    private Long index;
+    private int originalIndex;
 
-    private String code;
+    private String codeString;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "problem_id")
     private Problem problem;
 
-    public Code(Long index, String code, Problem problem) {
-        this.index = index;
-        this.code = code;
+    public Code(int originalIndex, String codeString, Problem problem) {
+        this.originalIndex = originalIndex;
+        this.codeString = codeString;
         setProblem(problem);
     }
 
