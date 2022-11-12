@@ -60,9 +60,12 @@ public class ProblemService {
         List<String> answer = codeRepository.findByProblemIdOrderByOriginalIndexAsc(problemId)
                 .stream()
                 .map(Code::getCodeString)
+                .map(String::trim)
                 .toList();
 
-        List<String> user = userAnswer.getCodes();
+        List<String> user = userAnswer.getCodes().stream()
+                .map(String::trim)
+                .toList();
 
         for (int i = 0; i < answer.size(); i++)
             if(!answer.get(i).equals(user.get(i)))
